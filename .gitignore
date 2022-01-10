@@ -1,0 +1,17 @@
+.vs
+*.sln
+DerivedDataCache/
+Intermediate/
+Saved/
+Binaries/
+Build/
+ipch/
+.vs
+*.suo
+
+desktop.ini
+
+
+
+
+
