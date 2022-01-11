@@ -63,7 +63,7 @@ void ASUProjectile::OnProjectileHit(
         true
     );
 
-     DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 8.0f);
+     DrawDebugSphere(GetWorld(), GetActorLocation(), DamageRadius, 24, FColor::Red, false, 4.0f);
 
      WeaponFXComponent->PlayImpactFX(Hit);
     Destroy();

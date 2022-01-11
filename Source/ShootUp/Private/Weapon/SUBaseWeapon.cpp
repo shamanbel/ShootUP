@@ -28,7 +28,6 @@ void ASUBaseWeapon::BeginPlay()
 }
 void ASUBaseWeapon::MakeShot()
 {
-
 }
 void ASUBaseWeapon::StartFire()
 {
@@ -63,24 +62,19 @@ bool ASUBaseWeapon::GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRota
 {
     const auto SUCharacter = Cast<ACharacter>(GetOwner());
     if (!SUCharacter) return false;
+
     if (SUCharacter->IsPlayerControlled())
-    {
-        const auto Controller = GetPlayerController();
+    {    //Контроль игроком
+        const auto Controller = SUCharacter->GetController<APlayerController>();
         if (!Controller) return false;
         Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
      }
     else
-    {
+    {    //Контроль AI
         ViewLocation = GetMuzzleWorldLocation();
         ViewRotation = WeaponMesh->GetSocketRotation(MuzzleSocketName);
     }
-    
-    
-    const auto Controller = GetPlayerController();
-    if (!Controller) return false;
-
-   Controller->GetPlayerViewPoint(ViewLocation, ViewRotation);
-    return true;
+  return true;
 }
 
 FVector ASUBaseWeapon::GetMuzzleWorldLocation() const 

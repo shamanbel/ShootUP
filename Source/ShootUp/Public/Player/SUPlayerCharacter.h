@@ -20,6 +20,9 @@ public:
    
 
 protected:
+    UPROPERTY(EditAnywhere)
+    TSubclassOf<ASUPlayerCharacter> PlayerCharacter;
+
     UPROPERTY(VisibleAnyWhere, BlueprintReadWrite, Category = "Components")
     UCameraComponent* CameraComponent;
 

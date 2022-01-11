@@ -53,8 +53,8 @@ bool ASUBaseCharacter::IsRunning() const
 
 void ASUBaseCharacter::OnDeath() 
 {
-    UE_LOG(BaseCharterLog, Warning, TEXT("Player %s IS DEAD"), *GetName());
-    //PlayAnimMontage(DeathAnimMontage);
+    //UE_LOG(BaseCharterLog, Warning, TEXT("Player %s IS DEAD"), *GetName());
+    PlayAnimMontage(DeathAnimMontage);
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(5.0f);
     //Игнор капсулы коллизии убитого актора

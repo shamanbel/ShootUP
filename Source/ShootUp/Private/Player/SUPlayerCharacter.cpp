@@ -32,7 +32,7 @@ void ASUPlayerCharacter::BeginPlay()
 {
     Super::BeginPlay();
     check(CameraCollisionComponent);
-
+    if (!GetWorld()) return;
     CameraCollisionComponent->OnComponentBeginOverlap.AddDynamic(this, &ASUPlayerCharacter::OnCameraCollisionBeginOverlap);
     CameraCollisionComponent->OnComponentEndOverlap.AddDynamic(this, &ASUPlayerCharacter::OnCameraCollisionEndOverlap);
 }

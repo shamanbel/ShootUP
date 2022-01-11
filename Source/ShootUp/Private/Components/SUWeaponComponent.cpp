@@ -3,6 +3,7 @@
 
 #include "Components/SUWeaponComponent.h"
 #include "Weapon/SUBaseWeapon.h"
+
 #include "GameFramework/Character.h"
 
 #include "Animations/SUEquipFinishedAnimNotify.h"
@@ -200,6 +201,7 @@ void USUWeaponComponent::ChangeClip()
   
     CurrentWeapon->StopFire();
     CurrentWeapon->ChangeClip();
+   
     ReloadAnimInProgress = true;
     PlayAnimMontage(ReloadAnimMontage);
 };

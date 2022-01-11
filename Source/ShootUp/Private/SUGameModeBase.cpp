@@ -128,6 +128,12 @@ void ASUGameModeBase::CreateTeamsInfo()
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "NPS");
 
+ /*       TArray<AActor*> FoundActors;
+        UGameplayStatics::GetAllActorsOfClass(GetWorld(), YourClass::StaticClass(), FoundActors);
+        if(FoundActors[1]->ActorHasTag("1"))
+        {
+        
+        }*/
         TeamID = TeamID == 1 ? 2 : 1;
     }
     
@@ -178,7 +184,7 @@ void ASUGameModeBase::RespawnRequest(AController* Controller)
 
 void ASUGameModeBase::GameOver()
 {
-    UE_LOG(LogModeBase, Display, TEXT("_________GAME OVER_______"));
+    //UE_LOG(LogModeBase, Display, TEXT("_________GAME OVER_______"));
     LogPlayerInfo();
 
     for (auto Pawn : TActorRange<APawn>(GetWorld()))
