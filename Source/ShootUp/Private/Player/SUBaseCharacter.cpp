@@ -16,6 +16,7 @@ ASUBaseCharacter::ASUBaseCharacter(const FObjectInitializer& ObjInit)
    : Super(ObjInit.SetDefaultSubobjectClass<USUCharacterMovementComponent>(ACharacter::CharacterMovementComponentName))
 {
     PrimaryActorTick.bCanEverTick = true;
+   
     HealthComponent = CreateDefaultSubobject<USUHealthComponent>("HealthComponent");
     //HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("HealthTextComponent");
     //HealthTextComponent->SetupAttachment(GetRootComponent());

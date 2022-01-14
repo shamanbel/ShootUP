@@ -32,7 +32,7 @@ protected:
     USUWeaponFXComponent* WeaponFXComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float DamageRadius = 5.0f;
+    float DamageRadius = 2.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float DamageAmount = 20.0f;  //урон от выстрела пистолета

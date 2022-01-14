@@ -95,7 +95,7 @@ void ASUGameModeBase::GameTimerUpdate()
     }
 }
 
- void ASUGameModeBase::ResetPlayers()
+void ASUGameModeBase::ResetPlayers()
 {
     if (!GetWorld()) return;
 

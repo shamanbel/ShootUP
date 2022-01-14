@@ -9,6 +9,7 @@
 #include "SUGameModeBase.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Perception/AISense_Damage.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 
 
 
@@ -19,7 +20,11 @@ USUHealthComponent::USUHealthComponent()
 	PrimaryComponentTick.bCanEverTick = false;
 }
 
-
+void USUHealthComponent::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const
+{
+    Super::GetLifetimeReplicatedProps(OutLifetimeProps);
+    DOREPLIFETIME(USUHealthComponent, Health);
+}
 
 void USUHealthComponent::BeginPlay()
 {
@@ -77,11 +82,14 @@ bool USUHealthComponent::IsHealthFull() const
  void USUHealthComponent::ReportDamageEvent(float Damage, AController* InstigatedBy) 
  {
      if (!InstigatedBy || !InstigatedBy->GetPawn() || !GetOwner()) return;
-     UAISense_Damage::ReportDamageEvent(GetWorld(), GetOwner(), InstigatedBy->GetPawn(), Damage, InstigatedBy->GetPawn()->GetActorLocation(),GetOwner()->GetActorLocation());
-
+     UAISense_Damage::ReportDamageEvent(
+         GetWorld(),                                    //
+         GetOwner(),                                    //
+         InstigatedBy->GetPawn(),                       //
+         Damage,                                        //
+         InstigatedBy->GetPawn()->GetActorLocation(),   //
+         GetOwner()->GetActorLocation());
  }
-
- 
 
  void USUHealthComponent::OnTakePointDamage(AActor* DamagedActor, float Damage, AController* InstigatedBy, FVector HitLocation,
      UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const UDamageType* DamageType, AActor* DamageCauser)
@@ -100,8 +108,7 @@ bool USUHealthComponent::IsHealthFull() const
  void USUHealthComponent::OnTakeAnyDamage(
      AActor* DamageActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)
  {
-    
-     ApplyDamage(Damage, InstigatedBy);
+    ApplyDamage(Damage, InstigatedBy);
  }
 
  void USUHealthComponent::ApplyDamage(float Damage, AController* InstigatedBy) 

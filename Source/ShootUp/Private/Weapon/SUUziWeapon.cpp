@@ -27,9 +27,11 @@ float DamageAmount = 10.0f;
 
 void ASUUziWeapon::MakeShot()
 {
+   
     if (!GetWorld() || IsAmmoEmpty())
     {
         StopFire();
+       
         return;
     }
     FVector TraceStart;
@@ -67,17 +69,18 @@ void ASUUziWeapon::MakeShot()
 
 void ASUUziWeapon::StartFire()
 {
-    //UE_LOG(LogBaseWeapon, Display, TEXT("FIRE"));
     MakeShot();
-  
-   //FireAudioComponent = UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
-   //FireAudioComponent->Play();
-   
+    FireAudioComponent = UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
+    FireAudioComponent->Play();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASUUziWeapon::MakeShot, TimeBetweenShots, true);
 }
 void ASUUziWeapon::StopFire()
 {
-    //FireAudioComponent->Stop(); проблема , вылетает
+    if (FireAudioComponent)
+    {
+        FireAudioComponent->Stop();
+    }
+    
     //UE_LOG(LogBaseWeapon, Display, TEXT("StopFIRE"));
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
     
