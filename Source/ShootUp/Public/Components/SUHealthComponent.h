@@ -13,7 +13,6 @@ DECLARE_MULTICAST_DELEGATE(FOnDeath);
 //DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, OnHealthChanged);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
 
-
 class UPhysicalMaterial;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
@@ -27,10 +26,9 @@ public:
 
 	FOnDeath OnDeath;
 
-   // UPROPERTY(BlueprintAssignable)
+    //UPROPERTY(BlueprintAssignable)
     FOnHealthChanged OnHealthChanged;
    
-
 	UFUNCTION(BlueprintCallable, Category = "Health")
     bool IsDead() const { return Health <= 0.0f;}
 
@@ -68,8 +66,7 @@ private:
     AActor* DamageCauser
 	);
 	
-    
-	void SetHealth(float NewHealth);
+    void SetHealth(float NewHealth);
 	void Killed(AController* KillerController);
     void ReportDamageEvent(float Damage, AController* InstigatedBy);
 

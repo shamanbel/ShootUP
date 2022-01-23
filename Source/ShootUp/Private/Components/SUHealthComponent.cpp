@@ -95,15 +95,13 @@ bool USUHealthComponent::IsHealthFull() const
      UPrimitiveComponent* FHitComponent, FName BoneName, FVector ShotFromDirection, const UDamageType* DamageType, AActor* DamageCauser)
  {
     const auto FinalDamage = Damage * GetPointDamageModifier(DamagedActor, BoneName);
-     //UE_LOG(LogHealth, Display, TEXT("OnPOINTDamage: %f, final damage :%f, bone: %s"), Damage, FinalDamage, * BoneName.ToString());
-     ApplyDamage(FinalDamage, InstigatedBy);
+    ApplyDamage(FinalDamage, InstigatedBy);
  }
 
  void USUHealthComponent::OnTakeRadialDamage(AActor* DamagedActor, float Damage, const UDamageType* DamageType, FVector Origin,
      FHitResult HitInfo, AController* InstigatedBy, AActor* DamageCauser)
  {
-     UE_LOG(LogHealth, Display, TEXT("OnRADIALDamage: %f"), Damage);
-     ApplyDamage(Damage, InstigatedBy);
+    ApplyDamage(Damage, InstigatedBy);
  }
  void USUHealthComponent::OnTakeAnyDamage(
      AActor* DamageActor, float Damage, const UDamageType* DamageType, AController* InstigatedBy, AActor* DamageCauser)

@@ -36,7 +36,9 @@ protected:
     USUWeaponFXComponent* WeaponFXComponent;
 
     virtual void BeginPlay() override;
+
     virtual void MakeShot() override;
+    
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const override;
 
 

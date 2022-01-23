@@ -7,11 +7,8 @@
 #include "Kismet/GameplayStatics.h"
 
 
-DEFINE_LOG_CATEGORY_STATIC(LogBasePickup, All, All);
-
 ASUBasePickUP::ASUBasePickUP()
 {
- 
 	PrimaryActorTick.bCanEverTick = true;
 	//создание объекта Pickup
 	CollisionComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
@@ -21,25 +18,17 @@ ASUBasePickUP::ASUBasePickUP()
     SetRootComponent(CollisionComponent);
 
 }
-
-
 void ASUBasePickUP::BeginPlay()
 {
 	Super::BeginPlay();
     check(CollisionComponent);
-
     GenerateRotationYaw();
-	
+
 }
-
-
-
-
 void ASUBasePickUP::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
     AddActorLocalRotation(FRotator(0.0f, RotationYaw, 0.0f));
-
 }
 
 void ASUBasePickUP::NotifyActorBeginOverlap(AActor* OtherActor)
@@ -50,8 +39,6 @@ void ASUBasePickUP::NotifyActorBeginOverlap(AActor* OtherActor)
     {
         PickupWasTaken();
     }
-    UE_LOG(LogBasePickup, Display, TEXT("Pickup go on"));
-
 }
 
 bool ASUBasePickUP::GivePickupTo(APawn* PlayerPawn)
@@ -59,13 +46,12 @@ bool ASUBasePickUP::GivePickupTo(APawn* PlayerPawn)
     return false;
 }
 
-void ASUBasePickUP::PickupWasTaken()
+void ASUBasePickUP::PickupWasTaken_Implementation()
 
 {
 	//Игнор коллизии pickup
     CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Ignore);
     // Делаем невидимым
-
 	GetRootComponent()->SetVisibility(false, true);
     FTimerHandle RespawnTimeHandle;
     GetWorldTimerManager().SetTimer(RespawnTimeHandle, this, &ASUBasePickUP::Respawn, RespawnTime);
@@ -81,6 +67,5 @@ void ASUBasePickUP::Respawn()
 void ASUBasePickUP::GenerateRotationYaw()
 {
     const auto Direction = FMath::RandBool() ? 1.0f : -1.0f;
-
     RotationYaw = FMath::RandRange(1.0f, 2.0f) * Direction;
 };

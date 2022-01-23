@@ -9,6 +9,5 @@ ASUMenuGameModeBase::ASUMenuGameModeBase()
 {
     PlayerControllerClass = ASUMenuPlayerController::StaticClass();
     HUDClass = ASUMenuHUD::StaticClass();
-
 }
 

@@ -3,18 +3,16 @@
 
 #include "Components/SUWeaponComponent.h"
 #include "Weapon/SUBaseWeapon.h"
-
 #include "GameFramework/Character.h"
-
 #include "Animations/SUEquipFinishedAnimNotify.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogWeapon, All, All)
+
 
 USUWeaponComponent::USUWeaponComponent()
 {
 	
 	PrimaryComponentTick.bCanEverTick = false;
-	// ...
+
 }
 
 void USUWeaponComponent::BeginPlay()
@@ -26,6 +24,7 @@ void USUWeaponComponent::BeginPlay()
     SpawnWeapons();
     EquipWeapon(CurrentWeaponIndex);
 }
+
 // ”ничтожение массива оружи€
   void USUWeaponComponent::EndPlay(const EEndPlayReason::Type EndPlayReason)
 
@@ -35,22 +34,18 @@ void USUWeaponComponent::BeginPlay()
       {
         Weapon->DetachFromActor(FDetachmentTransformRules::KeepWorldTransform);
         Weapon->Destroy();
-
-        }
+      }
       Weapons.Empty();
       Super::EndPlay(EndPlayReason);
     };
 
 void USUWeaponComponent::SpawnWeapons()
 {
-  
-
     ACharacter* Character = Cast<ACharacter>(GetOwner());
     if (!Character || !GetWorld()) return;
 
     for (auto WeaponClass : WeaponClasses)
     {
-
         auto Weapon = GetWorld()->SpawnActor<ASUBaseWeapon>(WeaponClass);
         if (!Weapon) continue;
         Weapon->OnClipEmpty.AddUObject(this, &USUWeaponComponent::OnEmptyClip);
@@ -114,8 +109,6 @@ void USUWeaponComponent::NextWeapon()
     CurrentWeaponIndex = (CurrentWeaponIndex + 1) % Weapons.Num();
     EquipWeapon(CurrentWeaponIndex);
 }
-
-
 
 void USUWeaponComponent::PlayAnimMontage(UAnimMontage* Animation)
 

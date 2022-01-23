@@ -72,7 +72,8 @@ public:
 
 	virtual void BeginPlay() override;
 
-	virtual void MakeShot();
+    //UFUNCTION(Client)
+    virtual void MakeShot();
     virtual bool GetTraceData(FVector& TraceStart, FVector& TraceEnd) const;
 
 	APlayerController* GetPlayerController() const;

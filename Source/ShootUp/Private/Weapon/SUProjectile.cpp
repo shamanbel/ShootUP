@@ -11,7 +11,7 @@ ASUProjectile::ASUProjectile()
 {
 
     PrimaryActorTick.bCanEverTick = false;
-    bReplicates = true;
+    //bReplicates = true;
     //Сфера для пули
     CollisionComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
     CollisionComponent->InitSphereRadius(1.0f);

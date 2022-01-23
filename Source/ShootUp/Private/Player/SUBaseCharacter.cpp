@@ -54,7 +54,6 @@ bool ASUBaseCharacter::IsRunning() const
 
 void ASUBaseCharacter::OnDeath() 
 {
-    //UE_LOG(BaseCharterLog, Warning, TEXT("Player %s IS DEAD"), *GetName());
     PlayAnimMontage(DeathAnimMontage);
     GetCharacterMovement()->DisableMovement();
     SetLifeSpan(5.0f);
@@ -71,7 +70,6 @@ void ASUBaseCharacter::TurnOff()
     WeaponComponent->StopFire();
     WeaponComponent->Zoom(false);
     Super::TurnOff();
-
 }
 
 void ASUBaseCharacter::Reset() 

@@ -19,7 +19,7 @@ class SHOOTUP_API ASUPistolWeapon : public ASUBaseWeapon
 	GENERATED_BODY()
 
 public:
-
+    //UFUNCTION(Server, Reliable)
     virtual void StartFire() override;
     virtual void StartFireAI() override;
     virtual void Zoom(bool Enabled) override;
@@ -38,7 +38,9 @@ protected:
  /*   UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Sound")
     USoundCue* NoAmmoSound;*/
 
+  //UFUNCTION(Server, Reliable)
    virtual void MakeShot() override;
+
    void MakeDamage(const FHitResult& HitResult);
 
    private:

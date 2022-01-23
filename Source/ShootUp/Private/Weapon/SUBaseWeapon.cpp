@@ -7,15 +7,14 @@
 #include "DrawDebugHelpers.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/Controller.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
+
 
 ASUBaseWeapon::ASUBaseWeapon()
 {
- 	
-	PrimaryActorTick.bCanEverTick = false;
-
-	WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponMesh");
+ 	PrimaryActorTick.bCanEverTick = false;
+    WeaponMesh = CreateDefaultSubobject<USkeletalMeshComponent>("WeaponMesh");
     SetRootComponent(WeaponMesh);
 }
 
@@ -26,7 +25,7 @@ void ASUBaseWeapon::BeginPlay()
     CurrentAmmo = DefaultAmmo;
 	
 }
-void ASUBaseWeapon::MakeShot()
+void ASUBaseWeapon::MakeShot() 
 {
 }
 void ASUBaseWeapon::StartFire()
@@ -52,10 +51,7 @@ APlayerController* ASUBaseWeapon::GetPlayerController() const
 {
     const auto Player = Cast<ACharacter>(GetOwner());
     if (!Player) return nullptr;
-
     return Player->GetController<APlayerController>();
-
-   
 }
 //Прицел для стрельбы
 bool ASUBaseWeapon::GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const 
@@ -133,12 +129,11 @@ void ASUBaseWeapon::ChangeClip()
 {
     if (CurrentAmmo.Clips ==0)
     {
-        
-        return;
+    return;
     }
     CurrentAmmo.Clips--;
     CurrentAmmo.Bullets = DefaultAmmo.Bullets;
-    UE_LOG(LogBaseWeapon, Display, TEXT("---------RELOAD-------------"));
+
 }
 bool ASUBaseWeapon::CanReload() const
 {
@@ -184,8 +179,6 @@ bool ASUBaseWeapon::IsAmmoFull() const
     FString AmmoInfo = "Ammo:" + FString::FromInt(CurrentAmmo.Bullets) + "/" + FString::FromInt(CurrentAmmo.Clips);
    
 }
-
-
 
 
 //    //Наносим урон для Actor

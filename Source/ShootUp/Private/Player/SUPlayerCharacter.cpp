@@ -5,7 +5,6 @@
 #include "Components/InputComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Components/SUWeaponComponent.h"
-
 #include "Components/CapsuleComponent.h"
 #include "Components/SphereComponent.h"
 
@@ -13,7 +12,7 @@ ASUPlayerCharacter::ASUPlayerCharacter(const FObjectInitializer& ObjInit) : Supe
 {
 
     PrimaryActorTick.bCanEverTick = true;
-   SetReplicates(true);
+    //SetReplicates(true);
 
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());
@@ -113,13 +112,11 @@ bool ASUPlayerCharacter::IsRunning() const
 
 void ASUPlayerCharacter::OnDeath()
 {
- 
     Super::OnDeath();
     if (Controller)
     {
         Controller->ChangeState(NAME_Spectating);
     }
-
 }
 
 
