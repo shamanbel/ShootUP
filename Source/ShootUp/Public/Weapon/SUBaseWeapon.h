@@ -39,6 +39,7 @@ public:
     virtual void StartFire();
     virtual void StartFireAI();
     virtual void StopFire();
+    
     bool IsFiring() const;
 
    void ChangeClip();
@@ -78,10 +79,7 @@ public:
 	APlayerController* GetPlayerController() const;
     bool GetPlayerViewPoint(FVector& ViewLocation, FRotator& ViewRotation) const;
     FVector GetMuzzleWorldLocation() const;
-    
     void MakeHit(FHitResult& HitResult, const FVector& TraceStart, const FVector& TraceEnd); 
-    //void MakeDamage(const FHitResult& HitResult);
-
     void DecreaseAmmo();
     bool IsAmmoEmpty() const;
     bool IsClipEmpty() const;
@@ -95,5 +93,6 @@ private:
     FAmmoData CurrentAmmo;
 
 protected:
+   
     bool FireInProgress = false;
 };

@@ -49,7 +49,7 @@ void ASUPlayerController::SetupInputComponent()
     InputComponent->BindAction("PauseGame", IE_Pressed, this, &ASUPlayerController::OnPauseGame);
 }
 
-void ASUPlayerController::OnPauseGame()
+void ASUPlayerController::OnPauseGame_Implementation()
 {
     if (!GetWorld() || !GetWorld()->GetAuthGameMode()) return;
     GetWorld()->GetAuthGameMode()->SetPause(this);

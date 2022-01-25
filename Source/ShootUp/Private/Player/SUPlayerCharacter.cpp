@@ -13,6 +13,7 @@ ASUPlayerCharacter::ASUPlayerCharacter(const FObjectInitializer& ObjInit) : Supe
 {
 
     PrimaryActorTick.bCanEverTick = true;
+   SetReplicates(true);
 
     SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>("SpringArmComponent");
     SpringArmComponent->SetupAttachment(GetRootComponent());

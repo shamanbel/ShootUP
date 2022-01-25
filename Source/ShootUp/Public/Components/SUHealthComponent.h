@@ -6,21 +6,27 @@
 #include "Components/ActorComponent.h"
 #include "SUHealthComponent.generated.h"
 
-class UPhysicalMaterial;
+
 
 DECLARE_MULTICAST_DELEGATE(FOnDeath);
+
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float, OnHealthChanged);
 DECLARE_MULTICAST_DELEGATE_OneParam(FOnHealthChanged, float);
+
+
+class UPhysicalMaterial;
 
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 
 class SHOOTUP_API USUHealthComponent : public UActorComponent
-{
+{ 
 	GENERATED_BODY()
 
 public:	
 	USUHealthComponent();
 
 	FOnDeath OnDeath;
+	// UPROPERTY(BlueprintAssignable)
     FOnHealthChanged OnHealthChanged;
    
 
@@ -30,6 +36,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Health")
     float GetHealthPercent() const { return Health / MaxHealth; 0.0f; }
 
+    UFUNCTION(BlueprintCallable)
 	float GetHealth() const { return Health; }	  
 
 	bool TryToAddHealth(float HealthAmount);
@@ -44,8 +51,11 @@ protected:
 	float MaxHealth = 100.0f;
 	virtual void BeginPlay() override;
 
-private:
+    UPROPERTY(Replicated)
     float Health = 0.0f;
+
+private:
+ 
 
 	UFUNCTION()
     void OnTakeAnyDamage
@@ -57,13 +67,10 @@ private:
     AActor* DamageCauser
 	);
 	
-	//UFUNCTION()
     
 	void SetHealth(float NewHealth);
 	void Killed(AController* KillerController);
     void ReportDamageEvent(float Damage, AController* InstigatedBy);
-
-	
 
 	UFUNCTION()
     void OnTakePointDamage
@@ -90,7 +97,7 @@ private:
 	class AController* InstigatedBy,		//
 	AActor* DamageCauser 
 	);
-
+    UFUNCTION(NetMulticast, Reliable)
 	void ApplyDamage(float Damage, AController* InstigatedBy);
     float GetPointDamageModifier(AActor* DamageActor, const FName& BoneName);
 };

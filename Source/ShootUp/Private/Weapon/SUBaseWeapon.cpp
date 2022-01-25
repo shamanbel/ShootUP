@@ -7,8 +7,10 @@
 #include "DrawDebugHelpers.h"
 #include "GameFramework/Character.h"
 #include "GameFramework/Controller.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogBaseWeapon, All, All);
+
+
 
 ASUBaseWeapon::ASUBaseWeapon()
 {
@@ -133,12 +135,10 @@ void ASUBaseWeapon::ChangeClip()
 {
     if (CurrentAmmo.Clips ==0)
     {
-        
-        return;
+    return;
     }
     CurrentAmmo.Clips--;
     CurrentAmmo.Bullets = DefaultAmmo.Bullets;
-    UE_LOG(LogBaseWeapon, Display, TEXT("---------RELOAD-------------"));
 }
 bool ASUBaseWeapon::CanReload() const
 {

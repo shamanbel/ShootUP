@@ -32,7 +32,7 @@ protected:
     USUWeaponFXComponent* WeaponFXComponent;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
-    float DamageRadius = 5.0f;
+    float DamageRadius = 2.0f;
 
     UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category = "Weapon")
     float DamageAmount = 20.0f;  //урон от выстрела пистолета
@@ -45,7 +45,7 @@ protected:
 private:
     FVector ShotDirection;
 
-    UFUNCTION()
+    UFUNCTION(NetMulticast, Reliable)
     void OnProjectileHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse,
         const FHitResult& Hit);
 

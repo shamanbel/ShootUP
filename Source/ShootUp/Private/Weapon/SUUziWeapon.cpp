@@ -7,6 +7,7 @@
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 #include "Components/AudioComponent.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 
 
 ASUUziWeapon::ASUUziWeapon() 
@@ -21,15 +22,17 @@ void ASUUziWeapon::BeginPlay()
     check(WeaponFXComponent);
 }
 
-DEFINE_LOG_CATEGORY_STATIC(LogUziWeapon, All, All);
+
 
 float DamageAmount = 10.0f;
 
 void ASUUziWeapon::MakeShot()
 {
+   
     if (!GetWorld() || IsAmmoEmpty())
     {
         StopFire();
+       
         return;
     }
     FVector TraceStart;
@@ -48,18 +51,9 @@ void ASUUziWeapon::MakeShot()
     {
         MakeDamage(HitResult);
 
-        //DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), HitResult.ImpactPoint, FColor::Red, false, 3.0f, 0, 3.0f);
+       WeaponFXComponent->PlayImpactFX(HitResult);
 
-        //DrawDebugSphere(GetWorld(), HitResult.ImpactPoint, 10.0f, 24, FColor::Red, false, 5.0f);
-        //Выводит наименование кости попадания трaйса
-        WeaponFXComponent->PlayImpactFX(HitResult);
-
-        UE_LOG(LogUziWeapon, Display, TEXT("Bone: %s"), *HitResult.BoneName.ToString());
-    }
-    else
-    {
-        DrawDebugLine(GetWorld(), GetMuzzleWorldLocation(), TraceEnd, FColor::Red, false, 3.0f, 0, 3.0f);
-    }
+        }
   
     
     DecreaseAmmo();
@@ -67,17 +61,18 @@ void ASUUziWeapon::MakeShot()
 
 void ASUUziWeapon::StartFire()
 {
-    //UE_LOG(LogBaseWeapon, Display, TEXT("FIRE"));
     MakeShot();
-  
-   //FireAudioComponent = UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
-   //FireAudioComponent->Play();
-   
+    FireAudioComponent = UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
+    FireAudioComponent->Play();
     GetWorldTimerManager().SetTimer(ShotTimerHandle, this, &ASUUziWeapon::MakeShot, TimeBetweenShots, true);
 }
 void ASUUziWeapon::StopFire()
 {
-    //FireAudioComponent->Stop(); проблема , вылетает
+    if (FireAudioComponent)
+    {
+        FireAudioComponent->Stop();
+    }
+    
     //UE_LOG(LogBaseWeapon, Display, TEXT("StopFIRE"));
     GetWorldTimerManager().ClearTimer(ShotTimerHandle);
     
@@ -98,7 +93,7 @@ bool ASUUziWeapon::GetTraceData(FVector& TraceStart, FVector& TraceEnd) const
 }
 
 //Наносим урон для Actor
-void ASUUziWeapon::MakeDamage(const FHitResult& HitResult)
+void ASUUziWeapon::MakeDamage_Implementation(const FHitResult& HitResult)
 {
     const auto DamagedActor = HitResult.GetActor();
     if (!DamagedActor) return;

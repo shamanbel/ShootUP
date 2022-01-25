@@ -5,9 +5,8 @@
 #include "Components/SphereComponent.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 
-
-DEFINE_LOG_CATEGORY_STATIC(LogBasePickup, All, All);
 
 ASUBasePickUP::ASUBasePickUP()
 {
@@ -27,12 +26,8 @@ void ASUBasePickUP::BeginPlay()
 {
 	Super::BeginPlay();
     check(CollisionComponent);
-
     GenerateRotationYaw();
-	
 }
-
-
 
 
 void ASUBasePickUP::Tick(float DeltaTime)
@@ -50,8 +45,6 @@ void ASUBasePickUP::NotifyActorBeginOverlap(AActor* OtherActor)
     {
         PickupWasTaken();
     }
-    UE_LOG(LogBasePickup, Display, TEXT("Pickup go on"));
-
 }
 
 bool ASUBasePickUP::GivePickupTo(APawn* PlayerPawn)
@@ -59,7 +52,7 @@ bool ASUBasePickUP::GivePickupTo(APawn* PlayerPawn)
     return false;
 }
 
-void ASUBasePickUP::PickupWasTaken()
+void ASUBasePickUP::PickupWasTaken_Implementation()
 
 {
 	//Игнор коллизии pickup
@@ -71,7 +64,7 @@ void ASUBasePickUP::PickupWasTaken()
     GetWorldTimerManager().SetTimer(RespawnTimeHandle, this, &ASUBasePickUP::Respawn, RespawnTime);
     UGameplayStatics::PlaySoundAtLocation(GetWorld(), PickupTakenSound, GetActorLocation());
 };
-void ASUBasePickUP::Respawn()
+void ASUBasePickUP::Respawn_Implementation()
 {
     GenerateRotationYaw();
     CollisionComponent->SetCollisionResponseToAllChannels(ECollisionResponse::ECR_Overlap);

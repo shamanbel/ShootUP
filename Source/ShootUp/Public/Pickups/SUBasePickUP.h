@@ -39,7 +39,9 @@ private:
 
 	float RotationYaw = 0.0f;
 	virtual bool GivePickupTo(APawn* PlayerPawn);
+    UFUNCTION(NetMulticast, Reliable)
     void PickupWasTaken();
-    void Respawn();
+    UFUNCTION(NetMulticast, Reliable)
+	void Respawn();
     void GenerateRotationYaw();
 };

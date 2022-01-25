@@ -11,10 +11,9 @@
 #include "EngineUtils.h"
 #include "Components/SURespawnComponent.h"
 #include "Components/SUWeaponComponent.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 #include "SUGameInstance.h"
 
-
-DEFINE_LOG_CATEGORY_STATIC(LogModeBase, All, All);
 
  ASUGameModeBase::ASUGameModeBase() 
  {
@@ -24,17 +23,14 @@ DEFINE_LOG_CATEGORY_STATIC(LogModeBase, All, All);
      PlayerStateClass = ASUPlayerState::StaticClass();
  }
 
- 
 
 void ASUGameModeBase::StartPlay() 
 {
     Super::StartPlay();
-    
     SpawnBots();
     CreateTeamsInfo();//–аспределение по командам
     CurrentRound = 1;
     StartRound();
-
     SetMatchState(ESUMatchState::InProgress);
 }
 
@@ -58,7 +54,6 @@ void ASUGameModeBase::SpawnBots()
 
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
         const auto SUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
         RestartPlayer(SUAIController);//спаунит игрока
     }
@@ -68,22 +63,16 @@ void ASUGameModeBase::StartRound()
 {
     RoundCountDown = GameData.RoundTime;
     GetWorldTimerManager().SetTimer(GameRoundTimerHandle, this, &ASUGameModeBase::GameTimerUpdate, 1.0f, true);
-
 }
 
 void ASUGameModeBase::GameTimerUpdate() 
 {
-    UE_LOG(LogModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
-    
-   /* const auto TimerRate = GetWorldTimerManager().GetTimerRate(GameRoundTimerHandle);
-    RoundCountDown = TimerRate;*/
-    if (--RoundCountDown ==0)
+     if (--RoundCountDown ==0)
     {
         GetWorldTimerManager().ClearTimer(GameRoundTimerHandle);
 
         if (CurrentRound + 1 <= GameData.RoundsNum)
         {
-
             ++CurrentRound;
             ResetPlayers();
             StartRound();
@@ -95,7 +84,7 @@ void ASUGameModeBase::GameTimerUpdate()
     }
 }
 
- void ASUGameModeBase::ResetPlayers()
+void ASUGameModeBase::ResetPlayers()
 {
     if (!GetWorld()) return;
 
@@ -112,7 +101,7 @@ void ASUGameModeBase::ResetOnePlayer(AController* Controller)
     }
     RestartPlayer(Controller);
 }
-void ASUGameModeBase::CreateTeamsInfo()
+void ASUGameModeBase::CreateTeamsInfo_Implementation()
 {
     if (!GetWorld()) return;
 
@@ -127,13 +116,6 @@ void ASUGameModeBase::CreateTeamsInfo()
 
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "NPS");
-
- /*       TArray<AActor*> FoundActors;
-        UGameplayStatics::GetAllActorsOfClass(GetWorld(), YourClass::StaticClass(), FoundActors);
-        if(FoundActors[1]->ActorHasTag("1"))
-        {
-        
-        }*/
         TeamID = TeamID == 1 ? 2 : 1;
     }
     
@@ -164,7 +146,6 @@ void ASUGameModeBase::LogPlayerInfo()
         if (!Controller) continue;
         const auto PlayerState = Cast<ASUPlayerState>(Controller->PlayerState);
         if (!PlayerState) continue;
-
         PlayerState->LogInfo();
     }
 }
@@ -182,11 +163,9 @@ void ASUGameModeBase::RespawnRequest(AController* Controller)
 }
 
 
-void ASUGameModeBase::GameOver()
+void ASUGameModeBase::GameOver_Implementation()
 {
-    //UE_LOG(LogModeBase, Display, TEXT("_________GAME OVER_______"));
-    LogPlayerInfo();
-
+     LogPlayerInfo();
     for (auto Pawn : TActorRange<APawn>(GetWorld()))
     {
         if (Pawn)
@@ -198,7 +177,7 @@ void ASUGameModeBase::GameOver()
     SetMatchState(ESUMatchState::GameOver);
 }
 
-void ASUGameModeBase::SetMatchState(ESUMatchState State)
+void ASUGameModeBase::SetMatchState_Implementation(ESUMatchState State)
 {
     if (MatchState == State) return;
 
