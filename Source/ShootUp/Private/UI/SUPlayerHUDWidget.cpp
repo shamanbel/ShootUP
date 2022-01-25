@@ -4,17 +4,15 @@
 #include "UI/SUPlayerHUDWidget.h"
 #include "Components/SUHealthComponent.h"
 #include "Components/SUWeaponComponent.h"
-//#include "SUUtils.h"
+
 
 float USUPlayerHUDWidget::GetHealthPercent() const
 {
     const auto Player = GetOwningPlayerPawn();
     if (!Player) return 0.0f;
-
     const auto Component = Player->GetComponentByClass(USUHealthComponent::StaticClass());
     const auto HealthComponent = Cast<USUHealthComponent>(Component);
     if (!HealthComponent) return 0.0f;
-
     return HealthComponent->GetHealthPercent();
 }
 

@@ -6,9 +6,7 @@
 #include "Engine/GameInstance.h"
 #include "SUGameInstance.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class SHOOTUP_API USUGameInstance : public UGameInstance
 {

@@ -11,6 +11,7 @@ ASUAI2Character::ASUAI2Character(const FObjectInitializer& ObjInit) : Super(ObjI
 {
     AutoPossessAI = EAutoPossessAI::Disabled;
     AIControllerClass = ASUAI2Controller::StaticClass();
+    SetReplicates(true);
 
 }
 

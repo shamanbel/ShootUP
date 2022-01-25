@@ -3,13 +3,11 @@
 
 #include "Menu/UI/SUMenuWidget.h"
 #include "Components/Button.h"
-
 #include "SUGameInstance.h"
 #include "Kismet/KismetSystemLibrary.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
 
-DEFINE_LOG_CATEGORY_STATIC(LogMenuWidget, All, All);
 
 void USUMenuWidget::NativeOnInitialized()
 {
@@ -31,7 +29,6 @@ void USUMenuWidget::ONStartGame()
 {
     PlayAnimation(HideAnimation);
     UGameplayStatics::PlaySound2D(GetWorld(), StartGameSound); 
-   
 }
 
 void USUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* Animation)
@@ -43,10 +40,8 @@ void USUMenuWidget::OnAnimationFinished_Implementation(const UWidgetAnimation* A
 
     if (SUGameInstance->GetStartupLevelName().IsNone())
     {
-        UE_LOG(LogMenuWidget, Error, TEXT("Level Name is none"));
-        return;
+    return;
     }
-
     UGameplayStatics::OpenLevel(this, SUGameInstance->GetStartupLevelName());
 }
 

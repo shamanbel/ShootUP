@@ -5,11 +5,12 @@
 #include "Weapon/SUProjectile.h"
 #include "Sound/SoundCue.h"
 #include "Kismet/GameplayStatics.h"
+#include "Runtime/Engine/Public/Net/UnrealNetwork.h"
 
 
-void ASUPistolWeapon::StartFire() 
+void ASUPistolWeapon::StartFire()
 {
- MakeShot();
+    MakeShot();
     UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
 }
 void ASUPistolWeapon::StartFireAI()
@@ -18,7 +19,8 @@ void ASUPistolWeapon::StartFireAI()
     UGameplayStatics::SpawnSoundAttached(FireSound, WeaponMesh, MuzzleSocketName);
 }
 //спаун пули
-void ASUPistolWeapon::MakeShot() 
+//void ASUPistolWeapon::MakeShot_Implementation()
+void ASUPistolWeapon::MakeShot()
 {
     if (!GetWorld() || IsAmmoEmpty()) return;
     FVector TraceStart;

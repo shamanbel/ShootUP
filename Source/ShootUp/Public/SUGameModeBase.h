@@ -29,6 +29,9 @@ public:
     int32 GetCurrentRoundNum() const { return CurrentRound; }
     int32 GetRoundSecondRemaining() const { return RoundCountDown; }
 
+    UFUNCTION(BlueprintCallable)
+    void SetMatchState(ESUMatchState State);
+
 protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
@@ -39,6 +42,8 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
+
+
 
 private:
 
@@ -56,6 +61,8 @@ private:
     void LogPlayerInfo();
     void StartRespawn(AController* Controller);
     void GameOver();
-    void SetMatchState(ESUMatchState State);
+
+
+
     void StopAllFire();
 };

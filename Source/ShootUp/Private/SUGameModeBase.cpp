@@ -29,7 +29,6 @@ DEFINE_LOG_CATEGORY_STATIC(LogModeBase, All, All);
 void ASUGameModeBase::StartPlay() 
 {
     Super::StartPlay();
-    
     SpawnBots();
     CreateTeamsInfo();//–аспределение по командам
     CurrentRound = 1;
@@ -58,7 +57,6 @@ void ASUGameModeBase::SpawnBots()
 
         FActorSpawnParameters SpawnInfo;
         SpawnInfo.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
-
         const auto SUAIController = GetWorld()->SpawnActor<AAIController>(AIControllerClass, SpawnInfo);
         RestartPlayer(SUAIController);//спаунит игрока
     }
@@ -73,29 +71,24 @@ void ASUGameModeBase::StartRound()
 
 void ASUGameModeBase::GameTimerUpdate() 
 {
-    UE_LOG(LogModeBase, Display, TEXT("Time: %i / Round: %i/%i"), RoundCountDown, CurrentRound, GameData.RoundsNum);
-    
-   /* const auto TimerRate = GetWorldTimerManager().GetTimerRate(GameRoundTimerHandle);
-    RoundCountDown = TimerRate;*/
     if (--RoundCountDown ==0)
     {
         GetWorldTimerManager().ClearTimer(GameRoundTimerHandle);
 
         if (CurrentRound + 1 <= GameData.RoundsNum)
         {
-
-            ++CurrentRound;
-            ResetPlayers();
-            StartRound();
+        ++CurrentRound;
+        ResetPlayers();
+        StartRound();
         }
         else 
         {
-            GameOver();
+        GameOver();
         }
     }
 }
 
- void ASUGameModeBase::ResetPlayers()
+void ASUGameModeBase::ResetPlayers()
 {
     if (!GetWorld()) return;
 
@@ -128,13 +121,7 @@ void ASUGameModeBase::CreateTeamsInfo()
         PlayerState->SetTeamID(TeamID);
         PlayerState->SetPlayerName(Controller->IsPlayerController() ? "Player" : "NPS");
 
- /*       TArray<AActor*> FoundActors;
-        UGameplayStatics::GetAllActorsOfClass(GetWorld(), YourClass::StaticClass(), FoundActors);
-        if(FoundActors[1]->ActorHasTag("1"))
-        {
-        
-        }*/
-        TeamID = TeamID == 1 ? 2 : 1;
+         TeamID = TeamID == 1 ? 2 : 1;
     }
     
 }
@@ -184,9 +171,7 @@ void ASUGameModeBase::RespawnRequest(AController* Controller)
 
 void ASUGameModeBase::GameOver()
 {
-    //UE_LOG(LogModeBase, Display, TEXT("_________GAME OVER_______"));
     LogPlayerInfo();
-
     for (auto Pawn : TActorRange<APawn>(GetWorld()))
     {
         if (Pawn)
@@ -201,7 +186,6 @@ void ASUGameModeBase::GameOver()
 void ASUGameModeBase::SetMatchState(ESUMatchState State)
 {
     if (MatchState == State) return;
-
     MatchState = State;
     OnMatchStateChanged.Broadcast(MatchState);
 }
@@ -221,12 +205,10 @@ void ASUGameModeBase::StopAllFire()
 bool ASUGameModeBase::SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate)
 {
     const auto PauseSet = Super::SetPause(PC, CanUnpauseDelegate);
-    
     if(PauseSet)
     {
         SetMatchState(ESUMatchState::Pause);
     }
-    
     return PauseSet;
 }
 

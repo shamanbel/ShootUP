@@ -5,17 +5,16 @@
 #include "SUGameModeBase.h"
 #include "Player/SUPlayerState.h"
 
- int32  USUGameDataWidget::GetKillsNum() const 
- {
-     const auto PlayerState = GetSUPlayerState();
-     return PlayerState ? PlayerState->GetKillsNum() : 0;
- };
+int32  USUGameDataWidget::GetKillsNum() const 
+{
+    const auto PlayerState = GetSUPlayerState();
+    return PlayerState ? PlayerState->GetKillsNum() : 0;
+}
 
 int32 USUGameDataWidget::GetCurrentRoundNum() const
 {
     const auto GameMode = GetSUGameMode();
     return GameMode ? GameMode->GetCurrentRoundNum() : 0;
-
 }
 
 int32 USUGameDataWidget::GetTotalRoundsNum() const
@@ -27,7 +26,7 @@ int32 USUGameDataWidget::GetTotalRoundsNum() const
 int32 USUGameDataWidget::GetRoundSecondsRemaining() const
 {
     const auto GameMode = GetSUGameMode();
-        return GameMode ? GameMode->GetRoundSecondRemaining() : 0;
+    return GameMode ? GameMode->GetRoundSecondRemaining() : 0;
 }
 
 ASUGameModeBase* USUGameDataWidget::GetSUGameMode() const

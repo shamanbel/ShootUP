@@ -7,10 +7,7 @@
 
 USUWeaponFXComponent::USUWeaponFXComponent()
 {
-	
 	PrimaryComponentTick.bCanEverTick = true;
-
-	
 }
 
 

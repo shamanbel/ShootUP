@@ -11,7 +11,6 @@ void ASUMenuHUD::BeginPlay()
     const auto MenuWidget = CreateWidget<UUserWidget>(GetWorld(), MenuWidgetClass);
     if (MenuWidget)
     {
-        MenuWidget->AddToViewport();
-
+    MenuWidget->AddToViewport();
     }
 }
