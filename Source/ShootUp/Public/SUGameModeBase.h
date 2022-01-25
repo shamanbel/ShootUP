@@ -22,17 +22,12 @@ public:
     virtual UClass* GetDefaultPawnClassForController_Implementation(AController* InController) override;
     void Killed(AController* KillerController, AController* VictimController);
     void RespawnRequest(AController* Controller);
-    //UFUNCTION(NetMulticast, Reliable)
     virtual bool SetPause(APlayerController* PC, FCanUnpause CanUnpauseDelegate = FCanUnpause()) override;
-    //UFUNCTION(NetMulticast, Reliable)
     virtual bool ClearPause() override;
     
     FGameData GetGameData() const { return GameData; }
     int32 GetCurrentRoundNum() const { return CurrentRound; }
     int32 GetRoundSecondRemaining() const { return RoundCountDown; }
-
-    UFUNCTION(NetMulticast, Reliable,BlueprintCallable)
-    void SetMatchState(ESUMatchState State);
 
 protected:
 
@@ -44,8 +39,6 @@ protected:
 
     UPROPERTY(EditDefaultsOnly, Category = "Game")
     FGameData GameData;
-
-
 
 private:
 
@@ -59,11 +52,10 @@ private:
     void GameTimerUpdate();
     void ResetPlayers();
     void ResetOnePlayer(AController* Controller);
-    UFUNCTION(NetMulticast, Reliable)
     void CreateTeamsInfo();//Распределение по командам
     void LogPlayerInfo();
     void StartRespawn(AController* Controller);
-    UFUNCTION(NetMulticast, Reliable)
     void GameOver();
+    void SetMatchState(ESUMatchState State);
     void StopAllFire();
 };

@@ -6,7 +6,7 @@
 #include "Components/SUWeaponComponent.h"
 #include "SUUtils.h"
 
-
+DEFINE_LOG_CATEGORY_STATIC(LogAmmoPickup, All, All);
 
 bool ASUAmmoPickUP::GivePickupTo(APawn* PlayerPawn)
 {
@@ -15,5 +15,7 @@ bool ASUAmmoPickUP::GivePickupTo(APawn* PlayerPawn)
      
     const auto WeaponComponent = SUUtils::GetSUPlayerComponent<USUWeaponComponent>(PlayerPawn);
     if (!WeaponComponent) return false;
+
+    UE_LOG(LogAmmoPickup, Display, TEXT("Ammo was taken"));
     return WeaponComponent->TryToAddAmmo(WeaponType, ClipsAmount);
 }

@@ -11,7 +11,7 @@ ASUProjectile::ASUProjectile()
 {
 
     PrimaryActorTick.bCanEverTick = false;
-    bReplicates = true;
+
     //Сфера для пули
     CollisionComponent = CreateDefaultSubobject<USphereComponent>("SphereComponent");
     CollisionComponent->InitSphereRadius(1.0f);
@@ -36,14 +36,14 @@ void ASUProjectile::BeginPlay()
     check(WeaponFXComponent);
 
     MovementComponent->Velocity = ShotDirection * MovementComponent->InitialSpeed;
-    CollisionComponent->IgnoreActorWhenMoving(GetOwner(), true); //столкновение пули и своего персонажа
+   // CollisionComponent->IgnoreActorWhenMoving(GetOwner(), true); столкновение пули и своего персонажа
     CollisionComponent->OnComponentHit.AddDynamic(this, &ASUProjectile::OnProjectileHit);//Делегат Столкновение с актором
    
     //Удаляем улетевшие пули
     SetLifeSpan(LifeProjectile);
 }
 
-void ASUProjectile::OnProjectileHit_Implementation(
+void ASUProjectile::OnProjectileHit(
     UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
     if (!GetWorld()) return;

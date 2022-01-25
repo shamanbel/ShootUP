@@ -45,7 +45,7 @@ private:
     UPROPERTY()
     UAudioComponent* FireAudioComponent;
 
-   UFUNCTION(NetMulticast, Reliable)
+
     void MakeDamage(const FHitResult& HitResult);
 
     AController* GetController() const;

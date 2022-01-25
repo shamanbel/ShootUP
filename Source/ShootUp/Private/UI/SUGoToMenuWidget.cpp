@@ -14,6 +14,7 @@ void USUGoToMenuWidget::NativeOnInitialized()
     if (GoToMenuButton)
     {
         GoToMenuButton->OnClicked.AddDynamic(this, &USUGoToMenuWidget::OnGoToMenu);
+
     }
 
 }
@@ -27,7 +28,8 @@ void USUGoToMenuWidget::OnGoToMenu()
 
     if (SUGameInstance->GetMenuLevelName().IsNone())
     {
-    return;
+       
+        return;
     }
 
     UGameplayStatics::OpenLevel(this, SUGameInstance->GetMenuLevelName());

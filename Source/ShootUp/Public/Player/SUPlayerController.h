@@ -27,8 +27,6 @@ protected:
     virtual void SetupInputComponent() override;
 
 private:
-
-    UFUNCTION(NetMulticast, Reliable)
     void OnPauseGame();
     void OnMatchStateChanged(ESUMatchState State);
 

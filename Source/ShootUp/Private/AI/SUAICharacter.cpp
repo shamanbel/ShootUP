@@ -12,7 +12,6 @@ ASUAICharacter::ASUAICharacter(const FObjectInitializer& ObjInit)               
 {
     AutoPossessAI = EAutoPossessAI::Disabled;
     AIControllerClass = ASUAIController::StaticClass();
-    SetReplicates(true);
 }
 
 void ASUAICharacter::OnDeath()
